@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown 簡報編輯器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="editor-section">
+            <div class="editor-header">
+                <h2>Markdown 編輯</h2>
+                <button id="toggleEditor" class="icon-button">🔄 收合編輯器</button>
+            </div>
+            <textarea id="markdownInput" placeholder="在這裡輸入 Markdown..."></textarea>
+        </div>
+        <div class="preview-section">
+            <div class="preview-header">
+                <h2>簡報預覽</h2>
+                <button id="fullscreen" class="icon-button">⛶ 全螢幕</button>
+            </div>
+            <div id="slidePreview"></div>
+            <div class="controls">
+                <button id="prevSlide">上一頁</button>
+                <span id="slideNumber">1 / 1</span>
+                <button id="nextSlide">下一頁</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

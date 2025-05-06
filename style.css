@@ -1,0 +1,170 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    padding: 20px;
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+.editor-section, .preview-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.editor-section.collapsed {
+    flex: 0;
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.preview-section.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    background: white;
+    padding: 20px;
+}
+
+.editor-header, .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon-button {
+    padding: 5px 10px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.icon-button:hover {
+    background: #e0e0e0;
+}
+
+h2 {
+    font-size: 1.2rem;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+#markdownInput {
+    flex: 1;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 14px;
+    resize: none;
+}
+
+#slidePreview {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    overflow-y: auto;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+}
+
+button {
+    padding: 8px 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+#slideNumber {
+    font-size: 14px;
+    color: #666;
+}
+
+/* 簡報樣式 */
+.slide {
+    display: none;
+    height: 100%;
+    padding: 20px;
+}
+
+.slide.active {
+    display: block;
+}
+
+.slide h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+}
+
+.slide h2 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+.slide h3 {
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.slide ul, .slide ol {
+    margin-left: 20px;
+    margin-bottom: 1em;
+}
+
+.slide p {
+    margin-bottom: 1em;
+}
+
+.slide code {
+    background: #f4f4f4;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.slide pre {
+    background: #f4f4f4;
+    padding: 15px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin-bottom: 1em;
+}
