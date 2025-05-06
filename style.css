@@ -90,7 +90,10 @@ h2 {
     border: 1px solid #ddd;
     border-radius: 4px;
     background: #fff;
-    overflow-y: auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .controls {
@@ -123,36 +126,111 @@ button:hover {
 /* 簡報樣式 */
 .slide {
     display: none;
-    height: 100%;
-    padding: 20px;
+    width: 100%;
+    max-width: 1024px;
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 比例 */
+    position: relative;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 0 auto;
+    transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 .slide.active {
     display: block;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide:not(.active) {
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+.slide-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 不同的簡報布局 */
+.slide-layout-title .slide-content {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.slide-layout-content .slide-content {
+    padding: 60px;
+}
+
+.slide-layout-two-col .slide-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding: 60px;
 }
 
 .slide h1 {
-    font-size: 2.5em;
+    font-size: 3em;
     margin-bottom: 0.5em;
+    color: #2c3e50;
+    text-align: center;
 }
 
 .slide h2 {
-    font-size: 2em;
+    font-size: 2.5em;
     margin-bottom: 0.5em;
+    color: #34495e;
 }
 
 .slide h3 {
-    font-size: 1.5em;
+    font-size: 2em;
     margin-bottom: 0.5em;
+    color: #2c3e50;
 }
 
 .slide ul, .slide ol {
-    margin-left: 20px;
+    margin-left: 30px;
     margin-bottom: 1em;
+    font-size: 1.2em;
+}
+
+.slide ul li, .slide ol li {
+    margin-bottom: 0.5em;
+    line-height: 1.4;
 }
 
 .slide p {
     margin-bottom: 1em;
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+/* 添加背景主題 */
+.slide {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+}
+
+.theme-dark {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #fff;
+}
+
+.theme-blue {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: #fff;
+}
+
+.theme-green {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    color: #fff;
 }
 
 .slide code {

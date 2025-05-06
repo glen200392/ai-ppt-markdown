@@ -48,41 +48,66 @@ document.addEventListener('DOMContentLoaded', function() {
     let slides = [];
 
     // 設置默認的 Markdown 內容
-    const defaultMarkdown = `# Markdown 簡報示例
-
-使用 Markdown 製作簡報
+    const defaultMarkdown = `<!-- layout: title -->
+# Markdown 簡報示例
+## 使用 Markdown 製作更好的簡報
 
 ---
+<!-- layout: content -->
+# 支援多種布局
 
-## 第二頁
+- 標題布局 (title)
+- 內容布局 (content)
+- 兩欄布局 (two-col)
+
+<!-- theme: blue -->
+
+---
+<!-- layout: two-col -->
+# 左欄內容
 
 - 支援基本 Markdown 語法
 - 使用 \`---\` 分隔每一頁
-- 即時預覽
+- 使用註釋設定布局和主題
+
+# 右欄內容
+
+- 支援不同主題
+  - 預設主題
+  - 深色主題
+  - 藍色主題
+  - 綠色主題
 
 ---
-
-## 程式碼展示
+<!-- layout: content -->
+<!-- theme: dark -->
+# 程式碼展示
 
 \`\`\`javascript
-function hello() {
-    console.log("Hello, World!");
+function createSlide(layout, theme) {
+    return {
+        layout,
+        theme,
+        content: 'Amazing!'
+    };
 }
 \`\`\`
 
 ---
+<!-- layout: content -->
+<!-- theme: green -->
+# 主題展示
 
-## 清單展示
+## 綠色主題
 
-1. 第一項
-2. 第二項
-3. 第三項
+1. 自動調整字體大小
+2. 優化的內容間距
+3. 漸層背景色彩
 
 ---
-
-## 結束
-
-感謝使用！`;
+<!-- layout: title -->
+# 謝謝觀看！
+## 開始製作你的簡報吧`;
 
     markdownInput.value = defaultMarkdown;
 
@@ -93,7 +118,31 @@ function hello() {
         slides = slideTexts.map(text => {
             const div = document.createElement('div');
             div.className = 'slide';
-            div.innerHTML = marked.parse(text.trim());
+            
+            // 解析布局和主題設置
+            const layoutMatch = text.match(/<!--\s*layout:\s*([\w-]+)\s*-->/);
+            const themeMatch = text.match(/<!--\s*theme:\s*([\w-]+)\s*-->/);
+            
+            // 設置布局
+            if (layoutMatch) {
+                div.classList.add(`slide-layout-${layoutMatch[1]}`);
+                // 移除布局標記
+                text = text.replace(/<!--\s*layout:\s*[\w-]+\s*-->/, '');
+            }
+            
+            // 設置主題
+            if (themeMatch) {
+                div.classList.add(`theme-${themeMatch[1]}`);
+                // 移除主題標記
+                text = text.replace(/<!--\s*theme:\s*[\w-]+\s*-->/, '');
+            }
+
+            // 創建內容容器
+            const content = document.createElement('div');
+            content.className = 'slide-content';
+            content.innerHTML = marked.parse(text.trim());
+            div.appendChild(content);
+            
             return div;
         });
 
