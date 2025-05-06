@@ -8,10 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const fullscreenBtn = document.getElementById('fullscreen');
     const editorSection = document.querySelector('.editor-section');
     const previewSection = document.querySelector('.preview-section');
+    const themeSelect = document.getElementById('themeSelect');
+    const layoutSelect = document.getElementById('layoutSelect');
 
     let currentSlide = 0;
     let isEditorCollapsed = false;
     let isFullscreen = false;
+    let currentTheme = 'default';
+    let currentLayout = 'content';
 
     // 收合編輯器
     toggleEditorBtn.addEventListener('click', () => {
@@ -48,66 +52,59 @@ document.addEventListener('DOMContentLoaded', function() {
     let slides = [];
 
     // 設置默認的 Markdown 內容
-    const defaultMarkdown = `<!-- layout: title -->
-# Markdown 簡報示例
-## 使用 Markdown 製作更好的簡報
+    const defaultMarkdown = `# Markdown 簡報示例
+## 使用 Markdown 製作簡報
 
 ---
-<!-- layout: content -->
-# 支援多種布局
 
-- 標題布局 (title)
-- 內容布局 (content)
-- 兩欄布局 (two-col)
+# 功能特色
 
-<!-- theme: blue -->
-
----
-<!-- layout: two-col -->
-# 左欄內容
-
-- 支援基本 Markdown 語法
-- 使用 \`---\` 分隔每一頁
-- 使用註釋設定布局和主題
-
-# 右欄內容
-
-- 支援不同主題
-  - 預設主題
-  - 深色主題
-  - 藍色主題
-  - 綠色主題
+- 支援多種專業布局
+- 豐富的主題選擇
+- 完整的 Markdown 支援
+- 即時預覽更新
 
 ---
-<!-- layout: content -->
-<!-- theme: dark -->
+
+# 左側內容 | # 右側內容
+
+- 使用下拉選單
+- 選擇布局風格
+- 即時切換主題
+
+| - 標題布局
+| - 內容布局
+| - 兩欄布局
+
+---
+
 # 程式碼展示
 
 \`\`\`javascript
-function createSlide(layout, theme) {
+function createSlide() {
     return {
-        layout,
-        theme,
-        content: 'Amazing!'
+        layout: '自由切換',
+        theme: '隨心所欲',
+        effect: '專業美觀'
     };
 }
 \`\`\`
 
 ---
-<!-- layout: content -->
-<!-- theme: green -->
-# 主題展示
 
-## 綠色主題
+# 投影片主題
 
-1. 自動調整字體大小
-2. 優化的內容間距
-3. 漸層背景色彩
+## 精美主題展示
+
+1. 預設主題 - 簡潔大方
+2. 深色主題 - 專業沉穩
+3. 藍色主題 - 科技現代
+4. 綠色主題 - 活力自然
 
 ---
-<!-- layout: title -->
-# 謝謝觀看！
-## 開始製作你的簡報吧`;
+
+# 開始使用！
+## 讓你的簡報更出色`;
 
     markdownInput.value = defaultMarkdown;
 
@@ -118,24 +115,8 @@ function createSlide(layout, theme) {
         slides = slideTexts.map(text => {
             const div = document.createElement('div');
             div.className = 'slide';
-            
-            // 解析布局和主題設置
-            const layoutMatch = text.match(/<!--\s*layout:\s*([\w-]+)\s*-->/);
-            const themeMatch = text.match(/<!--\s*theme:\s*([\w-]+)\s*-->/);
-            
-            // 設置布局
-            if (layoutMatch) {
-                div.classList.add(`slide-layout-${layoutMatch[1]}`);
-                // 移除布局標記
-                text = text.replace(/<!--\s*layout:\s*[\w-]+\s*-->/, '');
-            }
-            
-            // 設置主題
-            if (themeMatch) {
-                div.classList.add(`theme-${themeMatch[1]}`);
-                // 移除主題標記
-                text = text.replace(/<!--\s*theme:\s*[\w-]+\s*-->/, '');
-            }
+            div.classList.add(`slide-layout-${currentLayout}`);
+            div.classList.add(`theme-${currentTheme}`);
 
             // 創建內容容器
             const content = document.createElement('div');
@@ -148,6 +129,18 @@ function createSlide(layout, theme) {
 
         updateSlideView();
     }
+
+    // 主題切換處理
+    themeSelect.addEventListener('change', (e) => {
+        currentTheme = e.target.value;
+        convertToSlides(markdownInput.value);
+    });
+
+    // 布局切換處理
+    layoutSelect.addEventListener('change', (e) => {
+        currentLayout = e.target.value;
+        convertToSlides(markdownInput.value);
+    });
 
     // 更新投影片視圖
     function updateSlideView() {

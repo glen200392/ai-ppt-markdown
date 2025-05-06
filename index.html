@@ -11,7 +11,20 @@
         <div class="editor-section">
             <div class="editor-header">
                 <h2>Markdown 編輯</h2>
-                <button id="toggleEditor" class="icon-button">🔄 收合編輯器</button>
+                <div class="editor-controls">
+                    <select id="themeSelect" class="style-select">
+                        <option value="default">預設主題</option>
+                        <option value="dark">深色主題</option>
+                        <option value="blue">藍色主題</option>
+                        <option value="green">綠色主題</option>
+                    </select>
+                    <select id="layoutSelect" class="style-select">
+                        <option value="content">內容布局</option>
+                        <option value="title">標題布局</option>
+                        <option value="two-col">兩欄布局</option>
+                    </select>
+                    <button id="toggleEditor" class="icon-button">🔄 收合編輯器</button>
+                </div>
             </div>
             <textarea id="markdownInput" placeholder="在這裡輸入 Markdown..."></textarea>
         </div>
